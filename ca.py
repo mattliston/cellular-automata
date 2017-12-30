@@ -1,13 +1,15 @@
 import argparse
+import pickle
 import numpy as np ; print 'numpy ' + np.__version__
 import cv2 ; print 'cv2 ' + cv2.__version__
 
 parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-parser.add_argument('--init', help='initialization (left,middle,right,random)', default='random')
+parser.add_argument('--init', help='initialization (left,middle,right,random,pickle)', default='random')
 parser.add_argument('--width', help='ring size', default=512, type=int)
 parser.add_argument('--height', help='steps to display', default=512, type=int)
 parser.add_argument('--steps', help='steps to simulate', default=1000000, type=int)
 parser.add_argument('--scale', help='scale factor for display', default=1, type=int)
+parser.add_argument('--pickle', help='initial seed pickle file',default='seed.pickle')
 parser.add_argument('--debug', default=False, action='store_true')
 args = parser.parse_args()
 print args
@@ -21,6 +23,9 @@ if args.init=='right':
     x[-1] = 1
 if args.init=='random':
     x = np.random.binomial(1,0.5,size=x.shape)
+    pickle.dump(x, open(args.pickle, 'wb'), protocol=pickle.HIGHEST_PROTOCOL)
+if args.init=='pickle':
+    x = pickle.load(open(args.pickle, 'rb'))
 
 xl = np.empty(args.width,dtype=np.int)
 xm = np.empty(args.width,dtype=np.int)
