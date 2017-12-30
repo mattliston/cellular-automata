@@ -27,6 +27,9 @@ xm = np.empty(args.width,dtype=np.int)
 xr = np.empty(args.width,dtype=np.int)
 
 img = np.zeros([args.height,args.width],dtype=np.uint8)
+cv2.imshow('ca',cv2.resize(img,dsize=(0,0),fx=args.scale,fy=args.scale,interpolation=cv2.INTER_LANCZOS4))
+cv2.moveWindow('ca', 0,0)
+cv2.waitKey(10)
 
 for i in range(args.steps):
     #print x
@@ -43,7 +46,6 @@ for i in range(args.steps):
     x = y
     img[-1] = x*255
     cv2.imshow('ca',cv2.resize(img,dsize=(0,0),fx=args.scale,fy=args.scale,interpolation=cv2.INTER_LANCZOS4))
-    cv2.moveWindow('ca', 0,0)
     cv2.waitKey(10)
     img = np.roll(img,-1,axis=0)
 
