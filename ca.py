@@ -33,7 +33,8 @@ for i in range(args.steps):
     y = np.bitwise_or(y,np.bitwise_and(np.bitwise_and(np.bitwise_not(xl),np.bitwise_not(xm)),xr))
 
     x = y
-    img[i%args.height] = x*255
+    img[-1] = x*255
     cv2.imshow('ca',cv2.resize(img,dsize=(0,0),fx=args.scale,fy=args.scale,interpolation=cv2.INTER_LANCZOS4))
     cv2.waitKey(10)
+    img = np.roll(img,-1,axis=0)
 
