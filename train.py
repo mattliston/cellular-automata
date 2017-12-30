@@ -61,8 +61,8 @@ init = tf.global_variables_initializer()
 # draw blank visualization window and move it to a nice location on the screen
 fimg = np.zeros([args.height,args.width],dtype=np.uint8)
 bimg = np.zeros([args.height,args.width],dtype=np.uint8)
-cv2.imshow('vis',cv2.resize(np.concatenate([fimg,bimg],axis=1),dsize=(0,0),fx=args.scale,fy=args.scale,interpolation=cv2.INTER_LANCZOS4))
-cv2.moveWindow('ca', 0,0)
+cv2.imshow('vis',cv2.resize(np.concatenate([fimg,np.zeros([args.height,10],dtype=np.uint8),bimg],axis=1),dsize=(0,0),fx=args.scale,fy=args.scale,interpolation=cv2.INTER_LANCZOS4))
+cv2.moveWindow('vis', 0,0)
 cv2.waitKey(10)
 
 with tf.Session() as sess:
@@ -94,5 +94,5 @@ with tf.Session() as sess:
             bimg[j] = x_*255
             p = np.squeeze(sess.run(pred,feed_dict={x:[x_]}))
             x_ = np.random.binomial(1,p)
-        cv2.imshow('vis',cv2.resize(np.concatenate([fimg,bimg],axis=1),dsize=(0,0),fx=args.scale,fy=args.scale,interpolation=cv2.INTER_LANCZOS4))
+        cv2.imshow('vis',cv2.resize(np.concatenate([fimg,np.zeros([args.height,10],dtype=np.uint8),bimg],axis=1),dsize=(0,0),fx=args.scale,fy=args.scale,interpolation=cv2.INTER_LANCZOS4))
         cv2.waitKey(10)
