@@ -3,6 +3,7 @@ import numpy as np ; print 'numpy ' + np.__version__
 import cv2 ; print 'cv2 ' + cv2.__version__
 
 parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+parser.add_argument('--init', help='initialization (left,middle,right,random)', default='random')
 parser.add_argument('--width', help='ring size', default=512, type=int)
 parser.add_argument('--height', help='steps to display', default=512, type=int)
 parser.add_argument('--steps', help='steps to simulate', default=1000000, type=int)
@@ -12,7 +13,14 @@ args = parser.parse_args()
 print args
 
 x = np.zeros(args.width,dtype=np.int)
-x[-1] = 1
+if args.init=='left':
+    x[0] = 1
+if args.init=='middle':
+    x[args.width/2] = 1
+if args.init=='right':
+    x[-1] = 1
+if args.init=='random':
+    x = np.random.binomial(1,0.5,size=x.shape)
 
 xl = np.empty(args.width,dtype=np.int)
 xm = np.empty(args.width,dtype=np.int)
@@ -35,6 +43,7 @@ for i in range(args.steps):
     x = y
     img[-1] = x*255
     cv2.imshow('ca',cv2.resize(img,dsize=(0,0),fx=args.scale,fy=args.scale,interpolation=cv2.INTER_LANCZOS4))
+    cv2.moveWindow('ca', 0,0)
     cv2.waitKey(10)
     img = np.roll(img,-1,axis=0)
 
