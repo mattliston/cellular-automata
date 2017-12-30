@@ -26,6 +26,7 @@ if args.init=='random':
     pickle.dump(x, open(args.pickle, 'wb'), protocol=pickle.HIGHEST_PROTOCOL)
 if args.init=='pickle':
     x = pickle.load(open(args.pickle, 'rb'))
+    args.width = x.shape[0]
 
 xl = np.empty(args.width,dtype=np.int)
 xm = np.empty(args.width,dtype=np.int)
