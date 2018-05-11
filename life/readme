@@ -1,0 +1,5 @@
+to search:
+python life.py --search --size 200 --init patch --sigma 0.5 --w 20 --bounded
+
+to run from a given initial configuration:
+python life.py --vis --size 200 --scale 8 --pickle search_3460.pickle
